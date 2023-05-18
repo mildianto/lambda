@@ -1,0 +1,13 @@
+name: Deploy Functions in Production environment
+ 
+on:
+  push:
+    branches: [main]
+ 
+jobs:
+  call-update-function:
+    uses: ./.github/workflows/update-function.yaml
+    with:
+      environment: main
+    secrets: inherit
+

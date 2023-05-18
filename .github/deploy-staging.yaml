@@ -1,0 +1,12 @@
+name: Deploy Functions in Staging environment
+ 
+on:
+  push:
+    branches: [staging]
+ 
+jobs:
+  call-update-function:
+    uses: ./.github/workflows/update-function.yaml
+    with:
+      environment: staging
+    secrets: inherit
