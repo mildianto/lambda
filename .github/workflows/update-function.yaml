@@ -1,8 +1,8 @@
 name: Deploying multiple Lambdas
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
+
 jobs:
   deploy-prod:
     runs-on: ubuntu-latest
