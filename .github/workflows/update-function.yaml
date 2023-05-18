@@ -2,14 +2,18 @@ name: Deploying multiple Lambdas
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - staging
+      - main
+
     
 jobs:
-  lambda1:
+  deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Set env vars (staging)
+        if: endsWith(github.ref, '/staging')
+        
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -20,28 +24,5 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - run: zip -j lambda1.zip ./index.js ./lottie_mapping.js
-      - run: aws lambda update-function-code --function-name=lambda1 --zip-file=fileb://lambda1.zip
+      - run: aws lambda update-function-code --function-name=lambda2 --zip-file=fileb://lambda1.zip
       
-
-
-on:
-  push:
-    branches: [ "staging" ]
-  pull_request:
-    branches: [ "staging" ]
-    
-jobs:
-  lambda2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - run: zip -j lambda2.zip ./index.js ./lottie_mapping.js
-      - run: aws lambda update-function-code --function-name=lambda2 --zip-file=fileb://lambda2.zip
