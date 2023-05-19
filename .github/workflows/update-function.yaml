@@ -20,7 +20,7 @@ jobs:
         
   main:
     runs-on: ubuntu-latest
-    needs: [securityscan, staging]
+    needs: [staging]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -36,6 +36,7 @@ jobs:
       
   staging:
     runs-on: ubuntu-latest
+    needs: [securityscan]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
