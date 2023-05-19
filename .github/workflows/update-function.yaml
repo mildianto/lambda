@@ -1,36 +1,12 @@
 name: Deploying multiple Lambdas
-
 on:
   push:
     branches:
-      - staging
       - main
-
-    
 jobs:
-    name: Deploy to Staging
+  lambda1:
     runs-on: ubuntu-latest
-    environment: staging
-    
-    steps:      
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - run: zip -j lambda1.zip ./index.js ./lottie_mapping.js
-      - run: aws lambda update-function-code --function-name=lambda2 --zip-file=fileb://lambda1.zip
-      
-  deploy prod:
-    name: Deploy to Prod
-    runs-on: ubuntu-latest
-    environment: main
-    
-    steps:   
+    steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -42,3 +18,4 @@ jobs:
           aws-region: us-east-1
       - run: zip -j lambda1.zip ./index.js ./lottie_mapping.js
       - run: aws lambda update-function-code --function-name=lambda1 --zip-file=fileb://lambda1.zip
+      
