@@ -8,12 +8,11 @@ on:
 
     
 jobs:
-  deploy staging:
+    name: Deploy to Staging
     runs-on: ubuntu-latest
-    steps:
-      - name: Set env vars (staging)
-        if: endsWith(github.ref, '/staging')
-        
+    environment: staging
+    
+    steps:      
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -27,11 +26,11 @@ jobs:
       - run: aws lambda update-function-code --function-name=lambda2 --zip-file=fileb://lambda1.zip
       
   deploy prod:
+    name: Deploy to Prod
     runs-on: ubuntu-latest
-    steps:
-      - name: Set env vars (main)
-        if: endsWith(github.ref, '/main')
-        
+    environment: main
+    
+    steps:   
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
