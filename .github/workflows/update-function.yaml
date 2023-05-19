@@ -26,7 +26,6 @@ jobs:
       - run: zip -j lambda1.zip ./index.js ./lottie_mapping.js
       - run: aws lambda update-function-code --function-name=lambda2 --zip-file=fileb://lambda1.zip
       
-jobs:
   deploy prod:
     runs-on: ubuntu-latest
     steps:
