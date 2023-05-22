@@ -5,6 +5,16 @@ on:
       - main
       - staging
       - securityscan
+
+permissions:
+  id-token: write
+  contents: read
+      
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+
 jobs:
   securityscan:
     runs-on: ubuntu-latest
@@ -26,11 +36,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - uses: aws-actions/configure-aws-credentials@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+          role-to-assume: ${{ secrets.GH_ACTIONS_AWS_ROLE }}
+          role-session-name: OIDCGithubActionsSession
+
       - run: zip -j lambda1.zip ./index.js ./lottie_mapping.js
       - run: aws lambda update-function-code --function-name=lambda1 --zip-file=fileb://lambda1.zip
       
@@ -42,10 +55,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - uses: aws-actions/configure-aws-credentials@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+          role-to-assume: ${{ secrets.GH_ACTIONS_AWS_ROLE }}
+          role-session-name: OIDCGithubActionsSession
+
       - run: zip -j lambda1.zip ./index.js ./lottie_mapping.js
       - run: aws lambda update-function-code --function-name=lambda2 --zip-file=fileb://lambda1.zip
