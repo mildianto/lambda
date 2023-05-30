@@ -1,4 +1,4 @@
 # lambda
-testing CICD using AWS key
+testing CICD using AWS keys
 
-testing CICD using AWS Role
+testing CICD using AWS Roles
