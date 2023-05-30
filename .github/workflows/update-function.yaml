@@ -38,7 +38,7 @@ jobs:
           node-version: 16
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-1
           role-to-assume: ${{ secrets.GH_ACTIONS_AWS_ROLE }}
