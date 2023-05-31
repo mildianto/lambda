@@ -60,7 +60,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         
         with:
-          aws-region: us-east-1
+          aws-region: us-east-2
           #role-to-assume: ${{ secrets.GH_ACTIONS_AWS_ROLE }}
           role-to-assume: arn:aws:iam::367353093685:role/GithubActionKeylessRole
           role-session-name: OIDCGithubActionsSession
