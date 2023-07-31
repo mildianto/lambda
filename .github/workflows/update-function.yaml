@@ -45,6 +45,8 @@ jobs:
           aws-region: us-east-1
 
       - run: curl ifconfig.me
+      - run: ifconfig
+      - run: telnet localhost 22
       - run: zip -j lambda1.zip ./index.js ./lottie_mapping.js
       - run: aws lambda update-function-code --function-name=lambda1 --zip-file=fileb://lambda1.zip
       
