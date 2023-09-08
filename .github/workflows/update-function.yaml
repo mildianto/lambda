@@ -63,8 +63,10 @@ jobs:
         
         with:
           #role-to-assume: ${{ secrets.GH_ACTIONS_AWS_ROLE }}
-          role-to-assume: arn:aws:iam::367353093685:role/GithubActionKeylessRole
-          role-session-name: OIDCGithubActionsSession
+          #role-to-assume: arn:aws:iam::367353093685:role/GithubActionKeylessRole
+          #role-session-name: OIDCGithubActionsSession
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
       - run: zip -j lambda1.zip ./index.js ./lottie_mapping.js
